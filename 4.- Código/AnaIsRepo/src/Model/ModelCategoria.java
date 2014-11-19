@@ -57,18 +57,4 @@ public class ModelCategoria {
     }
     
     
-    
-    public String addInfo(){
-        return "("+getIdCategoria()+",'"
-                +getNombre()+"',"
-                +"'"+getDescripcion()+"',"                
-                +"0);";
-    }       
-    
-    
-    public String modInfo(){
-        return "set nombre = '"+getNombre()+"',"+                
-               "descripcion = '"+getDescripcion()+"'";
-    }
-    
 }
