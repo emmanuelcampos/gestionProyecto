@@ -86,8 +86,7 @@ public class ControllerViewEmpresa {
                 ControllerViewMsj.muestraMensajeGlobo("Agregua el R.F.C. de tu empresa", rfc);
         }else
             ControllerViewMsj.muestraMensajeGlobo("Agrega el nombre de tu empresa", nameBussines);
-    }
-    
+    }    
     public void modifEmpresa(JLabel labelStatus,ModelEmpresa emp){
         if(!nameBussines.getText().equals("Nombre de la empresa (*)") && !nameBussines.getText().isEmpty()){
             if(!rfc.getText().equals("R.F.C. (*)") && !rfc.getText().isEmpty()){

@@ -147,4 +147,28 @@ public class ModelProducto {
     }
           
     
+    public String addInfo(){
+        return "("+getIdProducto()+",'"
+                +getNombre()+"',"
+                +"'"+getDescripcion()+"',"                
+                +"'"+getLinkFoto()+"',"
+                +""+getKilos()+","
+                +""+getNumPersonas()+","
+                +""+getPrecioUnitario()+","                
+                +"0,"
+                +""+getIdCategoria()+","
+                +""+getIdEmpresa()+""
+                + ");";
+    }        
+    
+    
+    public String modInfo(){
+        return "set nombre = '"+getNombre()+"',"+ 
+               "descripcion = '"+getDescripcion()+"',"+
+                "linkFoto = '"+getLinkFoto()+"',"+
+               "kilos = "+getKilos()+","+
+               "numPersonas = "+getNumPersonas()+","+
+               "precioUnitario = "+getPrecioUnitario()+","+               
+               "Categoria_idCategoria = "+getIdCategoria();
+    }
 }

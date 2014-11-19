@@ -5,12 +5,15 @@
  */
 package Controller;
 
+import Model.ModelCategoria;
 import Model.ModelEmpresa;
+import Model.ModelProducto;
 import Model.ModelUsuario;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +43,7 @@ public class ControllerConsults {
             }
         }
         return flag;
-    }
+    }                        
     
     public static ModelEmpresa findInfoBussines(ModelEmpresa empresa){
         ControllerConnDBMS controller = new ControllerConnDBMS();
@@ -231,4 +234,215 @@ public class ControllerConsults {
         return flag;
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    ///Consultas agregadas-------------------
+    
+    public static boolean addInfoCategoria(ModelCategoria model){
+        boolean flag = false;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "insert into categoria values "+model.addInfo();
+            sta.executeUpdate(strQuery);
+            flag = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
+    }    
+    
+    
+    
+    public static boolean addInfoProducto(ModelProducto model){
+        boolean flag = false;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "insert into producto values "+model.addInfo();
+            sta.executeUpdate(strQuery);
+            flag = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
+    }    
+    
+    
+    
+    public static boolean checkExistCategoria(String idCategoria){
+        boolean flag = false;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "select * from categoria where idCategoria = "+idCategoria+";";
+            ResultSet res = sta.executeQuery(strQuery);
+            if(res.next())
+                flag = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
+    }
+    
+    
+    public static boolean checkExistProducto(String idCategoria){
+        boolean flag = false;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "select * from producto where idProducto = "+idCategoria+";";
+            ResultSet res = sta.executeQuery(strQuery);
+            if(res.next())
+                flag = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
+    }
+    
+    
+    
+    public static LinkedList findCategoria(String cadena){
+        LinkedList arrayCategoria=new LinkedList();
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "select * from categoria where elimiando=0 and nombre like '%"+cadena+"%';";
+            ResultSet res = sta.executeQuery(strQuery);
+            while(res.next())
+            {
+                ModelCategoria categoria=new ModelCategoria();
+                categoria.setIdCategoria(Integer.parseInt(res.getString("idCategoria")));
+                categoria.setNombre(res.getString("nombre"));
+                categoria.setDescripcion(res.getString("descripcion"));
+                arrayCategoria.add(categoria);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return arrayCategoria;
+    }
+    
+    
+    
+    public static boolean deleteCategoria(String nombre){
+        boolean flag = false;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "update categoria set elimiando=1 where nombre='"+nombre+"';";
+            sta.executeUpdate(strQuery);            
+            flag = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
+    }
+    
+    
+    
+    
+    public static boolean deleteProducto(String nombre){
+        boolean flag = false;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "update producto set eliminado=1 where nombre='"+nombre+"';";
+            sta.executeUpdate(strQuery);            
+            flag = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
+    }
+    
+    
+    
+    public static int idCategoria(String nombre){
+        int idCategoria = 0;
+        ControllerConnDBMS controller = new ControllerConnDBMS();
+        Connection conn = controller.connectDB();
+        try {
+            Statement sta = conn.createStatement();
+            String strQuery = "select idCategoria from categoria where nombre = '"+nombre+"';";
+            ResultSet res = sta.executeQuery(strQuery);
+            if(res.next()){
+                idCategoria=Integer.parseInt(res.getString("idCategoria"));                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+              try {
+                if (conn != null && !conn.isClosed())
+                    conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerConnDBMS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return idCategoria;
+    }    
 }

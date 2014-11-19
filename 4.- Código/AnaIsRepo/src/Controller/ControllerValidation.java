@@ -79,6 +79,11 @@ public class ControllerValidation {
             }
         });
     }
+    
+    
+    
+    
+    
 
     /**
      * Valida la caja de contrasenia para que solamente pueda contener un número
@@ -291,6 +296,20 @@ public class ControllerValidation {
     }
 
     public void placeHolder(boolean flag, JTextField boxText, String text) {
+        if (flag) {
+            if (boxText.getText().equals(text)) {
+                boxText.setForeground(new Color(0, 0, 0));
+                boxText.setText("");
+            }
+        } else {
+            if (boxText.getText().equals("")) {
+                boxText.setForeground(new Color(180, 180, 180));
+                boxText.setText(text);
+            }
+        }
+    }
+    //Area de texo
+    public void placeHolder(boolean flag, JTextArea boxText, String text) {
         if (flag) {
             if (boxText.getText().equals(text)) {
                 boxText.setForeground(new Color(0, 0, 0));
