@@ -6,7 +6,8 @@
 package View;
 
 import Controller.ControllerValidation;
-import Controller.ControllerViewEmpresa;
+import Controller.ControllerViewCategoria;
+import Model.ModelCategoria;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -18,13 +19,17 @@ import java.util.ArrayList;
 public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
 
     ControllerValidation validation;
+    ModelCategoria modelCategoria;
+    ControllerViewCategoria controllerCategoria;
     /**
      * Creates new form ViewCaptInfProductoInsumo
      */
     public ViewCaptInfProductoInsumo() {
         validation = new ControllerValidation();
+        modelCategoria=new ModelCategoria();
         initComponents();
         configInicial();
+        validationCategoriaProducto();
     }
     
     public void configInicial()
@@ -34,20 +39,13 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         setSize(dim);         
     }
     
-//    private void validationInsumo(){
-//        ArrayList components = new ArrayList<>();
-//        components.add(nameBussines);
-//        components.add(rfc);
-//        components.add(street);
-//        components.add(numInt);
-//        components.add(numExt);
-//        components.add(col);
-//        components.add(codePost);
-//        components.add(pagWeb);
-//        components.add(eMail);
-//        controller = new ControllerViewEmpresa(components);
-//        controller.validations();
-//    }
+    private void validationCategoriaProducto(){
+        ArrayList components = new ArrayList<>();
+        components.add(TextNombreCategoria);
+        components.add(TextDescripcionCategoria);        
+        controllerCategoria = new ControllerViewCategoria(components);
+        controllerCategoria.validations();
+    }
 //    
 //    private void validationProducto(){
 //        ArrayList components = new ArrayList<>();
@@ -76,10 +74,8 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         panelCliente = new javax.swing.JPanel();
-        labelIdCategoria = new javax.swing.JLabel();
         labelNombreCategoria = new javax.swing.JLabel();
         labelNombreCategoria1 = new javax.swing.JLabel();
-        TextIdCategoria = new javax.swing.JTextField();
         TextNombreCategoria = new javax.swing.JTextField();
         TextDescripcionCategoria = new javax.swing.JTextField();
         BotonAgregarCategoria = new javax.swing.JButton();
@@ -99,7 +95,6 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         AreaTextDescripcionProducto = new javax.swing.JTextArea();
         labelDescripcionProducto = new javax.swing.JLabel();
         BotonAgregarProducto = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         labelLinkFoto = new javax.swing.JLabel();
         LabelKilos = new javax.swing.JLabel();
@@ -120,13 +115,15 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         BotonEditarProducto = new javax.swing.JButton();
         BotonEliminarProducto = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
 
-        labelIdCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        labelIdCategoria.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        labelIdCategoria.setText("Id Categoria");
+        panelCliente.setBackground(new java.awt.Color(255, 255, 255));
 
         labelNombreCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelNombreCategoria.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -136,21 +133,9 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         labelNombreCategoria1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         labelNombreCategoria1.setText("Descripción");
 
-        TextIdCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        TextIdCategoria.setForeground(new java.awt.Color(204, 204, 255));
-        TextIdCategoria.setText("Id Categoria");
-        TextIdCategoria.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                TextIdCategoriaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                TextIdCategoriaFocusLost(evt);
-            }
-        });
-
         TextNombreCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TextNombreCategoria.setForeground(new java.awt.Color(204, 204, 255));
-        TextNombreCategoria.setText("Nombre de la categoria");
+        TextNombreCategoria.setText("Nombre de la categoria(*)");
         TextNombreCategoria.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 TextNombreCategoriaFocusGained(evt);
@@ -175,6 +160,11 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         BotonAgregarCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BotonAgregarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/tick.png"))); // NOI18N
         BotonAgregarCategoria.setText("Agregar");
+        BotonAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAgregarCategoriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelClienteLayout = new javax.swing.GroupLayout(panelCliente);
         panelCliente.setLayout(panelClienteLayout);
@@ -182,40 +172,35 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
             panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelClienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(labelNombreCategoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelIdCategoria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelNombreCategoria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNombreCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextIdCategoria)
-                    .addComponent(TextNombreCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(TextDescripcionCategoria))
+                    .addComponent(TextDescripcionCategoria)
+                    .addComponent(TextNombreCategoria))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClienteLayout.createSequentialGroup()
-                .addContainerGap(282, Short.MAX_VALUE)
+                .addContainerGap(229, Short.MAX_VALUE)
                 .addComponent(BotonAgregarCategoria)
-                .addGap(153, 153, 153))
+                .addGap(206, 206, 206))
         );
         panelClienteLayout.setVerticalGroup(
             panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelClienteLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelIdCategoria)
-                    .addComponent(TextIdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNombreCategoria)
-                    .addComponent(TextNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNombreCategoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelNombreCategoria1)
                     .addComponent(TextDescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
                 .addComponent(BotonAgregarCategoria)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         labelNombreCatEditDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelNombreCatEditDelete.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -251,24 +236,26 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(BotonEditarCategoria)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BotonEliminarCategoria))
-                    .addComponent(labelNombreCatEditDelete)
                     .addComponent(NombreCategoriaEditDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                    .addComponent(ComboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ComboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(BotonEditarCategoria)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BotonEliminarCategoria))
+                            .addComponent(labelNombreCatEditDelete))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(63, 63, 63))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(labelNombreCatEditDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(NombreCategoriaEditDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -294,7 +281,10 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         labelIdProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelIdProducto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -353,17 +343,6 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         BotonAgregarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/tick.png"))); // NOI18N
         BotonAgregarProducto.setText("Agregar");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -386,10 +365,6 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(BotonAgregarProducto)
                 .addGap(117, 117, 117))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,10 +386,10 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BotonAgregarProducto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         labelLinkFoto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelLinkFoto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -528,8 +503,8 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                             .addComponent(ComboCategoriaProducto, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(TextLinkFoto, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(TextKilos, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(TextNumPersonas)
-                            .addComponent(TextBuscaCategoria, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(TextBuscaCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                            .addComponent(TextNumPersonas))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -562,6 +537,8 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 .addComponent(ComboCategoriaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
         LabelNombreProd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         LabelNombreProd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -643,7 +620,7 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 286, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -667,7 +644,7 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -688,20 +665,12 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextIdCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextIdCategoriaFocusGained
-        validation.placeHolder(true,TextIdCategoria,"Id Categoria");
-    }//GEN-LAST:event_TextIdCategoriaFocusGained
-
-    private void TextIdCategoriaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextIdCategoriaFocusLost
-        validation.placeHolder(false ,TextIdCategoria,"Id Categoria");
-    }//GEN-LAST:event_TextIdCategoriaFocusLost
-
     private void TextNombreCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextNombreCategoriaFocusGained
-        validation.placeHolder(true,TextNombreCategoria,"Nombre de la categoria");
+        validation.placeHolder(true,TextNombreCategoria,"Nombre de la categoria(*)");
     }//GEN-LAST:event_TextNombreCategoriaFocusGained
 
     private void TextNombreCategoriaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextNombreCategoriaFocusLost
-        validation.placeHolder(false,TextNombreCategoria,"Nombre de la categoria");
+        validation.placeHolder(false,TextNombreCategoria,"Nombre de la categoria(*)");
     }//GEN-LAST:event_TextNombreCategoriaFocusLost
 
     private void TextDescripcionCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextDescripcionCategoriaFocusGained
@@ -792,6 +761,13 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         validation.placeHolder(false,TextBuscaProducto,"Nombre del producto");
     }//GEN-LAST:event_TextBuscaProductoFocusLost
 
+    private void BotonAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarCategoriaActionPerformed
+        next();
+    }//GEN-LAST:event_BotonAgregarCategoriaActionPerformed
+
+    private void next(){
+        controllerCategoria.next(modelCategoria);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea AreaTextDescripcionProducto;
@@ -813,7 +789,6 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
     private javax.swing.JTextField TextBuscaCategoria;
     private javax.swing.JTextField TextBuscaProducto;
     private javax.swing.JTextField TextDescripcionCategoria;
-    private javax.swing.JTextField TextIdCategoria;
     private javax.swing.JTextField TextIdProducto;
     private javax.swing.JTextField TextKilos;
     private javax.swing.JTextField TextLinkFoto;
@@ -828,11 +803,9 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelDescripcionProducto;
-    private javax.swing.JLabel labelIdCategoria;
     private javax.swing.JLabel labelIdProducto;
     private javax.swing.JLabel labelLinkFoto;
     private javax.swing.JLabel labelNombreCatEditDelete;

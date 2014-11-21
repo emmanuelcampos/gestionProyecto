@@ -57,4 +57,12 @@ public class ModelCategoria {
     }
     
     
+    public String addInfo(){
+        return "('"
+                +getNombre()+"','"
+                +getDescripcion()+"'"                
+                +",0);";
+    }
+    
+    
 }

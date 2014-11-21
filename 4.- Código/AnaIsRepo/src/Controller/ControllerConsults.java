@@ -250,8 +250,8 @@ public class ControllerConsults {
         Connection conn = controller.connectDB();
         try {
             Statement sta = conn.createStatement();
-   //         String strQuery = "insert into categoria values "+model.addInfo();
-//            sta.executeUpdate(strQuery);
+            String strQuery = "insert into categoria(nombre,descripcion,elimiando) values "+model.addInfo();
+            sta.executeUpdate(strQuery);
             flag = true;
         } catch (SQLException ex) {
             Logger.getLogger(ControllerConsults.class.getName()).log(Level.SEVERE, null, ex);
