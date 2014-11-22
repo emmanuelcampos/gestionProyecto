@@ -21,6 +21,8 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
     ControllerValidation validation;
     ModelCategoria modelCategoria;
     ControllerViewCategoria controllerCategoria;
+    String categoriaActualizar;
+    boolean banderaActualiza;
     /**
      * Creates new form ViewCaptInfProductoInsumo
      */
@@ -36,7 +38,10 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
     {
         Dimension dim = super.getToolkit().getScreenSize(); 
         setBackground(new Color(44,62,80));
-        setSize(dim);         
+        setSize(dim);                
+        botonCancelarActualizacion.setVisible(false);
+        banderaActualiza=true;
+        
     }
     
     private void validationCategoriaProducto(){
@@ -45,6 +50,7 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         components.add(TextDescripcionCategoria);        
         controllerCategoria = new ControllerViewCategoria(components);
         controllerCategoria.validations();
+        controllerCategoria.cargaComboCategoria(ComboCategoria,NombreCategoriaEditDelete.getText(),BotonEditarCategoria,BotonEliminarCategoria);
     }
 //    
 //    private void validationProducto(){
@@ -79,12 +85,15 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
         TextNombreCategoria = new javax.swing.JTextField();
         TextDescripcionCategoria = new javax.swing.JTextField();
         BotonAgregarCategoria = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
         labelNombreCatEditDelete = new javax.swing.JLabel();
-        NombreCategoriaEditDelete = new javax.swing.JTextField();
         ComboCategoria = new javax.swing.JComboBox();
+        NombreCategoriaEditDelete = new javax.swing.JTextField();
         BotonEditarCategoria = new javax.swing.JButton();
         BotonEliminarCategoria = new javax.swing.JButton();
+        botonCancelarActualizacion = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         labelIdProducto = new javax.swing.JLabel();
@@ -144,6 +153,11 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 TextNombreCategoriaFocusLost(evt);
             }
         });
+        TextNombreCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TextNombreCategoriaKeyPressed(evt);
+            }
+        });
 
         TextDescripcionCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TextDescripcionCategoria.setForeground(new java.awt.Color(204, 204, 255));
@@ -156,13 +170,76 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 TextDescripcionCategoriaFocusLost(evt);
             }
         });
+        TextDescripcionCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TextDescripcionCategoriaKeyPressed(evt);
+            }
+        });
 
         BotonAgregarCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotonAgregarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/tick.png"))); // NOI18N
-        BotonAgregarCategoria.setText("Agregar");
+        BotonAgregarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/filesave.png"))); // NOI18N
+        BotonAgregarCategoria.setToolTipText("Guardar categoria");
         BotonAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonAgregarCategoriaActionPerformed(evt);
+            }
+        });
+        BotonAgregarCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BotonAgregarCategoriaKeyPressed(evt);
+            }
+        });
+
+        labelNombreCatEditDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelNombreCatEditDelete.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelNombreCatEditDelete.setText("Nombre de la categoria");
+
+        ComboCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboCategoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboCategoriaItemStateChanged(evt);
+            }
+        });
+
+        NombreCategoriaEditDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        NombreCategoriaEditDelete.setForeground(new java.awt.Color(204, 204, 255));
+        NombreCategoriaEditDelete.setText("Buscar Categoria");
+        NombreCategoriaEditDelete.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                NombreCategoriaEditDeleteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                NombreCategoriaEditDeleteFocusLost(evt);
+            }
+        });
+        NombreCategoriaEditDelete.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreCategoriaEditDeleteKeyReleased(evt);
+            }
+        });
+
+        BotonEditarCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotonEditarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/edit.png"))); // NOI18N
+        BotonEditarCategoria.setToolTipText("Editar categoria");
+        BotonEditarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonEditarCategoriaActionPerformed(evt);
+            }
+        });
+
+        BotonEliminarCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotonEliminarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/trash.png"))); // NOI18N
+        BotonEliminarCategoria.setToolTipText("Eliminar categoria");
+        BotonEliminarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonEliminarCategoriaActionPerformed(evt);
+            }
+        });
+
+        botonCancelarActualizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/times.png"))); // NOI18N
+        botonCancelarActualizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActualizacionActionPerformed(evt);
             }
         });
 
@@ -176,92 +253,73 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                     .addComponent(labelNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNombreCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextDescripcionCategoria)
+                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(TextDescripcionCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                     .addComponent(TextNombreCategoria))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClienteLayout.createSequentialGroup()
-                .addContainerGap(229, Short.MAX_VALUE)
+                .addGap(105, 105, 105)
+                .addComponent(labelNombreCatEditDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NombreCategoriaEditDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(73, Short.MAX_VALUE))
+            .addGroup(panelClienteLayout.createSequentialGroup()
+                .addGap(173, 173, 173)
                 .addComponent(BotonAgregarCategoria)
-                .addGap(206, 206, 206))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCancelarActualizacion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BotonEditarCategoria)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BotonEliminarCategoria)
+                .addGap(146, 146, 146))
         );
         panelClienteLayout.setVerticalGroup(
             panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelClienteLayout.createSequentialGroup()
+                .addGap(0, 36, Short.MAX_VALUE)
                 .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNombreCategoria))
+                    .addComponent(labelNombreCategoria)
+                    .addComponent(labelNombreCatEditDelete)
+                    .addComponent(NombreCategoriaEditDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextDescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNombreCategoria1)
+                    .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNombreCategoria1)
-                    .addComponent(TextDescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(BotonAgregarCategoria)
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        labelNombreCatEditDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        labelNombreCatEditDelete.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        labelNombreCatEditDelete.setText("Nombre de la categoria");
-
-        NombreCategoriaEditDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        NombreCategoriaEditDelete.setForeground(new java.awt.Color(204, 204, 255));
-        NombreCategoriaEditDelete.setText("Buscar Categoria");
-        NombreCategoriaEditDelete.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                NombreCategoriaEditDeleteFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                NombreCategoriaEditDeleteFocusLost(evt);
-            }
-        });
-
-        ComboCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        BotonEditarCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotonEditarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/tick.png"))); // NOI18N
-        BotonEditarCategoria.setText("Editar");
-
-        BotonEliminarCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotonEliminarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/times.png"))); // NOI18N
-        BotonEliminarCategoria.setText("Eliminar");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NombreCategoriaEditDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                    .addComponent(ComboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(BotonEditarCategoria)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BotonEliminarCategoria))
-                            .addComponent(labelNombreCatEditDelete))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(63, 63, 63))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(labelNombreCatEditDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(NombreCategoriaEditDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonAgregarCategoria)
                     .addComponent(BotonEditarCategoria)
-                    .addComponent(BotonEliminarCategoria))
+                    .addComponent(BotonEliminarCategoria)
+                    .addComponent(botonCancelarActualizacion))
                 .addContainerGap())
+        );
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -271,14 +329,17 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(49, 49, 49))
+                .addGap(36, 36, 36)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(panelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -503,7 +564,7 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                             .addComponent(ComboCategoriaProducto, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(TextLinkFoto, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(TextKilos, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(TextBuscaCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                            .addComponent(TextBuscaCategoria, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(TextNumPersonas))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
@@ -644,7 +705,7 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -653,14 +714,14 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1205, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -762,11 +823,60 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
     }//GEN-LAST:event_TextBuscaProductoFocusLost
 
     private void BotonAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarCategoriaActionPerformed
-        next();
+        if (banderaActualiza) 
+        {
+            next();
+        }else
+        {
+            banderaActualiza=controllerCategoria.updateCategoria(modelCategoria,categoriaActualizar,botonCancelarActualizacion,BotonEliminarCategoria);
+            controllerCategoria.cargaComboCategoria(ComboCategoria,NombreCategoriaEditDelete.getText(),BotonEditarCategoria,BotonEliminarCategoria);
+        }
+        
     }//GEN-LAST:event_BotonAgregarCategoriaActionPerformed
+
+    private void TextNombreCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextNombreCategoriaKeyPressed
+        if (evt.getKeyChar()== 10) {
+            next();
+        }
+    }//GEN-LAST:event_TextNombreCategoriaKeyPressed
+
+    private void TextDescripcionCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextDescripcionCategoriaKeyPressed
+        if (evt.getKeyChar()== 10) {
+            next();
+        }
+    }//GEN-LAST:event_TextDescripcionCategoriaKeyPressed
+
+    private void BotonAgregarCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BotonAgregarCategoriaKeyPressed
+        if (evt.getKeyChar()== 10) {
+            next();
+        }
+    }//GEN-LAST:event_BotonAgregarCategoriaKeyPressed
+
+    private void NombreCategoriaEditDeleteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCategoriaEditDeleteKeyReleased
+        controllerCategoria.cargaComboCategoria(ComboCategoria, NombreCategoriaEditDelete.getText(),BotonEditarCategoria,BotonEliminarCategoria);
+    }//GEN-LAST:event_NombreCategoriaEditDeleteKeyReleased
+
+    private void BotonEliminarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarCategoriaActionPerformed
+        controllerCategoria.deleteCategoria(ComboCategoria.getSelectedItem().toString(),NombreCategoriaEditDelete);
+        controllerCategoria.cargaComboCategoria(ComboCategoria,NombreCategoriaEditDelete.getText(),BotonEditarCategoria,BotonEliminarCategoria);
+    }//GEN-LAST:event_BotonEliminarCategoriaActionPerformed
+
+    private void ComboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboCategoriaItemStateChanged
+        controllerCategoria.cargaTextoCategoria(ComboCategoria, jTextArea1);
+    }//GEN-LAST:event_ComboCategoriaItemStateChanged
+
+    private void BotonEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEditarCategoriaActionPerformed
+        banderaActualiza=controllerCategoria.updateCategoria(ComboCategoria, TextNombreCategoria, TextDescripcionCategoria,BotonEliminarCategoria,botonCancelarActualizacion,banderaActualiza);        
+        categoriaActualizar=ComboCategoria.getSelectedItem().toString();        
+    }//GEN-LAST:event_BotonEditarCategoriaActionPerformed
+
+    private void botonCancelarActualizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActualizacionActionPerformed
+        banderaActualiza=controllerCategoria.cancelaActu(botonCancelarActualizacion, BotonEliminarCategoria,TextNombreCategoria,TextDescripcionCategoria,banderaActualiza);        
+    }//GEN-LAST:event_botonCancelarActualizacionActionPerformed
 
     private void next(){
         controllerCategoria.next(modelCategoria);
+        controllerCategoria.cargaComboCategoria(ComboCategoria,NombreCategoriaEditDelete.getText(),BotonEditarCategoria,BotonEliminarCategoria);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -796,15 +906,18 @@ public final class ViewCaptInfProductoInsumo extends javax.swing.JPanel {
     private javax.swing.JTextField TextNombreProducto;
     private javax.swing.JTextField TextNumPersonas;
     private javax.swing.JTextField TextPrecioUnitario;
+    private javax.swing.JButton botonCancelarActualizacion;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelDescripcionProducto;
     private javax.swing.JLabel labelIdProducto;
     private javax.swing.JLabel labelLinkFoto;

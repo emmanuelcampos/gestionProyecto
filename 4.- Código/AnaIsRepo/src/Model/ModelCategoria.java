@@ -65,4 +65,10 @@ public class ModelCategoria {
     }
     
     
+    public String modInfo(){
+        return "set nombre = '"+getNombre()+"',"+ 
+               "descripcion = '"+getDescripcion()+"'";     
+    }
+    
+    
 }
